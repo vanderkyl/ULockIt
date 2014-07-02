@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html class="html">
+ <head>
+
+  <script type="text/javascript">
+   if(typeof Muse == "undefined") window.Muse = {}; window.Muse.assets = {"required":["jquery-1.8.3.min.js", "museutils.js", "jquery.musemenu.js", "jquery.watch.js", "storage-calculator.css"], "outOfDate":[]};
+</script>
+  
+  <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+  <meta name="keywords" content="RV STORAGE, BOAT STORAGE, SELF STORAGE, MINI STORAGE, STORAGE LOCKERS, BASTROP, TX, CEDAR CREEK TX, CEDAR CREEK, BASTROP TX, AUTO STORAGE, EQUIPMENT STORAGE, BOXES, MOVING SUPPLIES, PACKING SUPPLIES, SECURE STORAGE, SURFACE PARKING, CLIMATE CONTROLLED STORAGE, "/>
+  <meta name="generator" content="2014.0.0.264"/>
+  <title>Storage Calculator</title>
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="css/site_global.css?3827343374"/>
+  <link rel="stylesheet" type="text/css" href="css/storage-calculator.css?487601436" id="pagesheet"/>
+  <!-- Other scripts -->
+  <script type="text/javascript">
+   document.documentElement.className += ' js';
+var __adobewebfontsappname__ = "muse";
+</script>
+  <!-- JS includes -->
+  <script type="text/javascript">
+   document.write('\x3Cscript src="' + (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//webfonts.creativecloud.com/pt-sans-narrow:n7:all;contrail-one:n4:all.js" type="text/javascript">\x3C/script>');
+</script>
+  <!--[if lt IE 9]>
+  <script src="scripts/html5shiv.js?4241844378" type="text/javascript"></script>
+  <![endif]-->
+    <!--custom head HTML-->
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41848166-1', 'ulockitonline.com');
+  ga('send', 'pageview');
+
+</script>
+<script language="Javascript" type="text/javascript">
+      var tabIndex=100;
+
+      var cubeTotal = 0   // Cubic Footage Total
+      var unitCalc = ""   // String for calculated image size display to user
+      var unitLengthFlag = 0   // Flag for items longer than 5x5 unit (not5x5)
+      var passVar = ""         // Variable to pass user items usrList form variable
+      var usrList = ""         // Form variable to pass user items to PHP
+      var unitSize = ""        // Form variable to pass unit size to PHP
+
+      // Display unitCalc string to user (UnitEstimate DIV)
+      function showItem(item) {
+         obj=document.getElementById(item);
+         obj.innerHTML="<center><table width='75%' border='1'><tr><td bgcolor='yellow'><span class='bodytext'>Your Estimated Unit Size " + getUnit() + "</span></td></tr></table></center>";
+         obj.style.display="block";
+      }
+
+      // Reset fields and totals and hide unitCalc display box (UnitEstimate DIV)
+      function hideItem(item) {
+         obj=document.getElementById(item);
+         obj.style.display="none";
+         document.formcalc.total.value = 0;
+         unitLengthFlag = 0;
+         furniture.reset();
+         appliances.reset();
+         misc.reset();
+         boxes.reset();
+      }
+
+    var calcItem = function(description, cubicFt, defQty, padding, not5x5, headspace){
+      if(!calcItem.prototype.setup){
+      calcItem.prototype.setup=true;
+      calcItem.prototype.counter=0;
+      }
+      this.name="calcItem"+calcItem.prototype.counter++;
+      this.description = description;
+      this.cubicFt = cubicFt;
+      if(defQty != null) this.qty = defQty;
+      else this.qty = 0;
+      if(padding != null) this.padding = padding;
+      else this.padding = 0;
+      if(not5x5 != null) this.not5x5 = not5x5;
+      else this.not5x5 = 0;
+      if(headspace != null) this.headspace = headspace;
+      else this.headspace = 0;
+   }
+
+   calcItem.prototype.reset = function(){
+      this.qty = 0;
+      var textBox = document.getElementById(this.name);
+      textBox.value=0;
+   }
+
+   function getUnit() {
+      cubeTotal = document.formcalc.total.value;
+      if(cubeTotal <= 0) {
+         unitCalc = "ZERO - NOTHING TO CALCULATE";
+      }
+      else if((cubeTotal <= 150) && (unitLengthFlag == 0)) {
+         unitCalc = "is 5x5";
+      }
+      else if(cubeTotal <= 150) {
+         unitCalc = "is 5x5, but you have " + unitLengthFlag + " items that are too long to fit in that space. You may be able to utilize the 5x5 unit if your item will stand on end. Otherwise, the recomended size is 5x10.";
+      }
+      else if(cubeTotal <= 180) {
+         unitCalc = "is 5x6";
+      }
+      else if(cubeTotal <= 210) {
+         unitCalc = "is 5x7";
+      }
+      else if(cubeTotal <= 228) {
+         unitCalc = "is 5x7.5";
+      }
+      else if(cubeTotal <= 270) {
+         unitCalc = "is 4.5x10 or 6x7.5";
+      }
+      else if(cubeTotal <= 300) {
+         unitCalc = "is 5x10";
+      }
+      else if(cubeTotal <= 378) {
+         unitCalc = "is 5x12.5";
+      }
+      else if(cubeTotal <= 390) {
+         unitCalc = "is 6.5x10";
+      }
+      else if(cubeTotal <= 420) {
+         unitCalc = "is 7x10";
+      }
+      else if(cubeTotal <= 450) {
+         unitCalc = "is 7.5x10";
+      }
+      else if(cubeTotal <= 480) {
+         unitCalc = "is 8x10";
+      }
+      else if(cubeTotal <= 570) {
+         unitCalc = "is 9.5x10";
+      }
+      else if(cubeTotal <= 600) {
+         unitCalc = "is 10x10";
+      }
+      else if(cubeTotal <= 678) {
+         unitCalc = "is 7.5x15";
+      }
+      else if(cubeTotal <= 720) {
+         unitCalc = "is 10x12";
+      }
+      else if(cubeTotal <= 840) {
+         unitCalc = "is 10x14";
+      }
+      else if(cubeTotal <= 900) {
+         unitCalc = "is 10x15";
+      }
+      else if(cubeTotal <= 1008) {
+         unitCalc = "is 12x14";
+      }
+      else if(cubeTotal <= 1020) {
+         unitCalc = "is 10x17";
+      }
+      else if(cubeTotal <= 1056) {
+         unitCalc = "is 11x16";
+      }
+      else if(cubeTotal <= 1080) {
+         unitCalc = "is 10x18";
+      }
+      else if(cubeTotal <= 1152) {
+         unitCalc = "is 12x16";
+      }
+      else if(cubeTotal <= 1200) {
+         unitCalc = "is 10x20";
+      }
+      else if(cubeTotal <= 1350) {
+         unitCalc = "is 15x15";
+      }
+      else if(cubeTotal <= 1560) {
+         unitCalc = "is 10x26";
+      }
+      else if(cubeTotal <= 1800) {
+         unitCalc = "is 10x30 or 20x15 or 15x20";
+      }
+      else if(cubeTotal <= 1872) {
+         unitCalc = "is 12x26";
+      }
+      else if(cubeTotal <= 2250) {
+         unitCalc = "is 12.5x30";
+      }
+      else if(cubeTotal <= 2400) {
+         unitCalc = "may require multiple units - 1 12.5x30 plus 1 5x5 - Contact the office for special rates, or to discuss the possibility of tightly packing your storage items to avoid the extra unit.";
+      }
+      else if(cubeTotal <= 2460) {
+         unitCalc = "may require multiple units - 1 12.5x30 plus 1 5x7 - Contact the office for special rates, or to discuss the possibility of tightly packing or condensing your storage items to avoid the extra unit.";
+      }
+      else if(cubeTotal <=2550) {
+         unitCalc = "requires multiple units - 1 12.5x30 plus 1 5x10 - Contact the office for special rates.";
+      }
+      else if(cubeTotal <=2850) {
+         unitCalc = "requires multiple Units - 12.5x30 plus 1 10x10 - Contact the office for special rates.";
+      }
+      else if(cubeTotal <=2980) {
+         unitCalc = "requires multiple units - 2 15x15 - Contact the office for special rates.";
+      }
+      else {
+       unitCalc = "requires multiple units. You are storing a lot of stuff! Contact the office for a special discount price quote";
+      }
+      return unitCalc;
+   }
+
+   function sendmail() {
+      usrItemList = new Array();
+      var x = 0
+      var li = "";
+      passVar = "";
+      for(var c = 0; c < furniture.items.length; c++){
+         if(furniture.items[c].qty > 0) {
+            li = ("furn " + furniture.items[c].qty + " " +furniture.items[c].description);
+            usrItemList[x] = li;
+            x = x + 1;
+            passVar += li + ",";
+         }
+      }
+      for(var c = 0; c < appliances.items.length; c++){
+         if(appliances.items[c].qty > 0) {
+            li = ("appl " + appliances.items[c].qty + " " + appliances.items[c].description);
+            usrItemList[x] = li;
+            x = x + 1;
+            passVar += li + ",";
+         }
+      }
+      for(var c = 0; c < misc.items.length; c++){
+         if(misc.items[c].qty > 0) {
+            li = ("misc " + misc.items[c].qty + " " + misc.items[c].description);
+            usrItemList[x] = li;
+            x = x + 1;
+            passVar += li + ",";
+         }
+      }
+      for(var c = 0; c < boxes.items.length; c++){
+         if(boxes.items[c].qty > 0) {
+            li = ("boxes " + boxes.items[c].qty + "  " + boxes.items[c].description);
+            usrItemList[x] = li;
+            x = x + 1;
+            passVar += li + ","
+         }
+      }
+      document.formcalc.usrList.value = passVar;
+      document.formcalc.unitSize.value = getUnit();
+   }
+
+
+//      for(var c = 0; c < 10; c++){
+//         alert("well");
+//         if(this.items[c].qty = 0) alert("yep" + this.description + " " + this.qty);
+//      }
+//   }
+
+
+
+   calcItem.prototype.toString = function(){
+      var str= "Description: "+this.description + "<br />";
+      str += "Cubic Feet: "+ this.cubicFt + "<br />";
+      str += "Quantity: " + this.qty + "<br />";
+      str += "Padding: "+this.padding+"<br />";
+      str += "5x5 OK: "+this.not5x5+"<br />";
+      str += "Head Space: "+this.headspace+"<br />";
+      str += "Item auto name: "+this.name + "<br />";
+      return str;
+   }
+
+   calcItem.prototype.getSpace = function(){
+      if(this.not5x5 == 1) unitLengthFlag = unitLengthFlag + this.qty;
+      return this.qty*(this.cubicFt+this.padding+this.headspace);
+   }
+
+   var calculator = function(myName, catImage, numCols){
+      this.name=myName;
+      this.catImage = catImage;
+      this.numCols = numCols;
+      this.items = new Array();
+   }
+
+   calculator.prototype.reset = function(){
+      for(var c = 0; c < this.items.length; c++){
+         this.items[c].reset();
+      }
+   }
+
+//   function addextra() {
+//      document.formcalc.total.value = document.formcalc.total.value + document.extraspace.xtra.value;
+//      document.extraspace.xtra.value = 0;
+//      showItem('UnitEstimate');
+
+//   }
+
+   // Clear all fields
+
+
+   // Clears fields for entry on focus
+   function clearDefault(el) {
+      if (el.defaultValue==el.value) el.value = ""
+   }
+
+
+   // Set Items for Display
+   calculator.prototype.addItem = function(newItem){
+      this.items[this.items.length]=newItem;
+   }
+
+   calculator.prototype.toString = function(){
+      var str="";
+      this.items.sort();
+      for(var c = 0; c < this.items.length; c++){
+         str += this.items[c].toString()+"<br />";
+      }
+      return str;
+   }
+
+   calculator.prototype.getSpace = function(){
+      var total = 0;
+      for(var c = 0; c < this.items.length; c++){
+         total += this.items[c].getSpace();
+      }
+      return total;
+   }
+
+   // Total All
+   var calcTotal = function(){
+      var t = 0;
+      unitLengthFlag = 0;
+      t += furniture.getSpace();
+      t += appliances.getSpace();
+      t += misc.getSpace();
+      t += boxes.getSpace();
+      t += Number(document.formcalc.xtra.value);
+      document.formcalc.total.value=t;
+   }
+
+   // Form Display
+   calculator.prototype.printTable = function(){
+      this.items.sort();
+      var cols = this.numCols;
+      var rows = Math.ceil(this.items.length/cols);
+      document.write("<table class='calculator' cellpadding='2' cellspacing='0' border='0'>");
+      for(var r = 0; r<rows; r++){
+         document.write("<tr>");
+         for(var c = 0; c<cols; c++){
+            if(c==0 && r==0){
+               document.write("<td width='15px'><img src='http://www.ulockitonline.com/images/clear.gif' width='15px' height='1px' alt='' /></td>");
+               document.write("<td width='15px'><img src='http://www.ulockitonline.com/images/clear.gif' width='15px' height='1px' alt='' /></td>");
+               document.write("<td width='113px'><img src='http://www.ulockitonline.com/images/clear.gif' width='113px'height='1px' alt='' /></td>");
+               document.write("<td width='15px'><img src='http://www.ulockitonline.com/images/clear.gif' width='15px' height='1px' alt='' /></td>");
+               document.write("<td width='113px'><img src='http://www.ulockitonline.com/images/clear.gif' width='113px'height='1px' alt='' /></td>");
+               document.write("<td width='15px'><img src='http://www.ulockitonline.com/images/clear.gif' width='15px' height='1px' alt='' /></td>");
+               document.write("<td width='113px'><img src='http://www.ulockitonline.com/images/clear.gif' width='113px'height='1px' alt='' /></td>");
+               document.write("<td width='15px'><img src='http://www.ulockitonline.com/images/clear.gif' width='15px' height='1px' alt='' /></td>");
+               document.write("<td width='113px'><img src='http://www.ulockitonline.com/images/clear.gif' width='113px'height='1px' alt='' /></td>");
+               document.write("<td width='15px'><img src='http://www.ulockitonline.com/images/clear.gif' width='15px' height='1px' alt='' /></td>");
+               document.write("<td width='113px'><img src='http://www.ulockitonline.com/images/clear.gif' width='113px'height='1px' alt='' /></td>");
+               document.write("</tr>");
+               document.write("<tr>");
+               //document.write("<td rowspan='"+rows+"' width='15px' valign='top'><img src='http://www.ulockitonline.com/images/"+this.catImage+"' width='15' alt='' /></td>");
+               document.write("<td rowspan='"+rows+"' width='15px' valign='top'></td>");
+            }
+            var curItem = this.items[(c*(rows))+r];
+            if(curItem){
+               tab=(c*rows)+r+tabIndex;
+               document.write("<td valign='top'><input id='"+curItem.name+"' tabIndex='"+tab+"' value='"+curItem.qty+"' style='width:22px;' onblur='"+this.name+".items[" + ((c*rows)+r) + "].qty = Number(this.form."+curItem.name+".value);calcTotal()' size='3' maxlength='3' /></td>");
+               document.write("<td valign='middle'><span class='tablelist'>"+curItem.description+"</span></td>");
+               }
+            else document.write("&nbsp;");
+            document.write("</td>");
+         }
+         document.write("</tr>");
+      }
+      document.write("</table>");
+      tabIndex+=(r*c);
+   }
+
+   </script>
+ </head>
+ <body>
+
+  <div class="clearfix" id="page"><!-- column -->
+   <div class="browser_width" id="u2952-bw">
+    <div class="pinned-colelem" id="u2952"><!-- simple frame --></div>
+   </div>
+   <a class="anchor_item colelem" id="top"></a>
+   <div class="rgba-background clearfix pinned-colelem" id="u3195-8"><!-- content -->
+    <p class="Header" id="u3195-2">Call Us! (512) 321&#45;2370</p>
+    <p class="ulockit-company-description-copy" id="u3195-4">Office Hours Mon&#45;Sat</p>
+    <p class="ulockit-company-description-copy" id="u3195-6">9:00am &#45; 6:00pm</p>
+   </div>
+   <a class="nonblock nontext anim_swing clip_frame pinned-colelem" id="u3193" href="storage-calculator.html#top"><!-- image --><img class="block" id="u3193_img" src="images/ulockit2-crop-u3193.png" alt="" width="155" height="48"/></a>
+   <nav class="MenuBar clearfix pinned-colelem" id="menuu3136"><!-- horizontal box -->
+    <div class="MenuItemContainer clearfix grpelem" id="u3165"><!-- vertical box -->
+     <a class="nonblock nontext MenuItem MenuItemWithSubMenu shadow gradient rounded-corners clearfix colelem" id="u3166" href="index.html#ourservices"><!-- horizontal box --><div class="MenuItemLabel NoWrap clearfix grpelem" id="u3169-4"><!-- content --><p>Our Services</p></div></a>
+    </div>
+    <div class="MenuItemContainer clearfix grpelem" id="u3186"><!-- vertical box -->
+     <a class="nonblock nontext MenuItem MenuItemWithSubMenu shadow gradient rounded-corners clearfix colelem" id="u3189" href="rv-space-rentals.html"><!-- horizontal box --><div class="MenuItemLabel NoWrap clearfix grpelem" id="u3190-4"><!-- content --><p>Large Vehicle Storage</p></div></a>
+    </div>
+    <div class="MenuItemContainer clearfix grpelem" id="u3179"><!-- vertical box -->
+     <a class="nonblock nontext MenuItem MenuItemWithSubMenu shadow gradient rounded-corners clearfix colelem" id="u3180" href="index.html#promotion"><!-- horizontal box --><div class="MenuItemLabel NoWrap clearfix grpelem" id="u3182-4"><!-- content --><p>Useful Tools &amp; Promotions</p></div></a>
+    </div>
+    <div class="MenuItemContainer clearfix grpelem" id="u3144"><!-- vertical box -->
+     <a class="nonblock nontext MenuItem MenuItemWithSubMenu shadow gradient rounded-corners clearfix colelem" id="u3145" href="reserve-a-unit.html"><!-- horizontal box --><div class="MenuItemLabel NoWrap clearfix grpelem" id="u3148-4"><!-- content --><p>Reserve A Unit</p></div></a>
+    </div>
+    <div class="MenuItemContainer clearfix grpelem" id="u3137"><!-- vertical box -->
+     <a class="nonblock nontext MenuItem MenuItemWithSubMenu shadow gradient rounded-corners clearfix colelem" id="u3138" href="pay-your-bill-online.html"><!-- horizontal box --><div class="MenuItemLabel NoWrap clearfix grpelem" id="u3139-4"><!-- content --><p>Pay Your Bill</p></div></a>
+    </div>
+    <div class="MenuItemContainer clearfix grpelem" id="u3172"><!-- vertical box -->
+     <a class="nonblock nontext MenuItem MenuItemWithSubMenu shadow gradient rounded-corners clearfix colelem" id="u3175" href="index.html#contactus"><!-- horizontal box --><div class="MenuItemLabel NoWrap clearfix grpelem" id="u3178-4"><!-- content --><p>Contact Us</p></div></a>
+    </div>
+   </nav>
+   <div class="colelem" id="u3016"><!-- custom html -->
+    <body onload="calcTotal(); hideItem('UnitEstimate')">
+<div id="main">
+   <!-- ****************************************************************************************** -->
+   <!--  BEGIN FORM                                                                                -->
+   <!--     Calculations: {Description,Initial Value,Quantity,Padding,Minimum Length,Head Space }  -->
+   <!--     Padding is used to determine tight or loose packing.                                   -->
+   <!--     Minimum Length determines whether a 5x5 unit is appropriate. 0=OK 1=Not                -->
+   <!--     Head Space is added to items that may not be stackable.                                -->
+   <!-- ****************************************************************************************** -->
+                     <form name="formcalc" action="mailform.php" method="post" onreset="hideItem('UnitEstimate');">
+                        <script language="javascript" type="text/javascript">
+                           // FURNITURE
+                           //document.write("<img style='margin-left:0px; margin-right:5px;' align='left' width='60px' height='130px' border='0' alt='Furniture' src='images/Chair-Dresser.gif' />");
+                           document.write("<div class='CalcTitle' style='clear:both;'><h2>Furniture</h2></div>");
+                           var furniture = new calculator("furniture","Furniture.gif",5);
+                           furniture.addItem(new calcItem("Armoire",50,0,5,0,0));
+                           furniture.addItem(new calcItem("Roll-Away Bed",20,0,5,0,0));
+                           furniture.addItem(new calcItem("Bed Crib",20,0,2,0,0));
+                           furniture.addItem(new calcItem("Bed Frame Bunk Bed",40,0,5,0,0));
+                           furniture.addItem(new calcItem("Bed Frame Double",20,0,2,0,0));
+                           furniture.addItem(new calcItem("Bed Frame King",20,0,5,0,0));
+                           furniture.addItem(new calcItem("Bed Frame Queen",20,0,3,0,0));
+                           furniture.addItem(new calcItem("Bed Frame Single",10,0,3,0,0));
+                           furniture.addItem(new calcItem("Book Case Large",34,0,5,1,0));
+                           furniture.addItem(new calcItem("Book Case Medium",25,0,4,0,0));
+                           furniture.addItem(new calcItem("Book Case Small",10,0,2,0,0));
+                           furniture.addItem(new calcItem("Cabinet Small",10,0,2,0,0));
+                           furniture.addItem(new calcItem("Cabinet Corner",20,0,2,0,0));
+                           furniture.addItem(new calcItem("CD Rack",5,0,0,0,0));
+                           furniture.addItem(new calcItem("Chair Armchair",15,0,3,0,5));
+                           furniture.addItem(new calcItem("Chair Office",8,0,1,0,0));
+                           furniture.addItem(new calcItem("Chair Straight",5,0,1,0,0));
+                           furniture.addItem(new calcItem("Chair Dining",8,0,1,0,0));
+                           furniture.addItem(new calcItem("Chair Recliner",20,0,2,0,5));
+                           furniture.addItem(new calcItem("Chair Rocking",15,0,2,0,2));
+                           furniture.addItem(new calcItem("Desk Office",25,0,2,0,0));
+                           furniture.addItem(new calcItem("Desk Computer",15,0,2,0,0));
+                           furniture.addItem(new calcItem("Dresser Double",40,0,3,0,0));
+                           furniture.addItem(new calcItem("Dresser Single",20,0,2,0,0));
+                           furniture.addItem(new calcItem("Entertain Cntr Large",40,0,3,1,0));
+                           furniture.addItem(new calcItem("Entertain Cntr Small",20,0,2,0,0));
+                           furniture.addItem(new calcItem("Lamp Floor",10,0,0,0,0));
+                           furniture.addItem(new calcItem("Lamp Table",3,0,0,0,0));
+                           furniture.addItem(new calcItem("Mattress Double",30,0,2,0,2));
+                           furniture.addItem(new calcItem("Mattress King",40,0,4,0,2));
+                           furniture.addItem(new calcItem("Mattress Queen",35,0,2,0,2));
+                           furniture.addItem(new calcItem("Mattress Single",18,0,1,0,2));
+                           furniture.addItem(new calcItem("Sofa Average",60,0,5,0,5));
+                           furniture.addItem(new calcItem("Sofa Large",75,0,7,0,5));
+                           furniture.addItem(new calcItem("Sofa Sectional",100,0,5,0,5));
+                           furniture.addItem(new calcItem("Table End",5,0,1,0,0));
+                           furniture.addItem(new calcItem("Table Night Stand",5,0,1,0,0));
+                           furniture.addItem(new calcItem("Table Coffee",10,0,2,0,0));
+                           furniture.addItem(new calcItem("Table Dining Kitchen",20,0,2,0,0));
+                           furniture.addItem(new calcItem("Table Dining Large",30,0,2,0,0));
+                           furniture.printTable();
+                           // APPLIANCES
+                           //document.write("<img style='margin-left:0px; margin-right:5px;' hspace='5px' vspace='5px' align='left' width='60px' height='93px' border='0' alt='Refrigerator' src='images/Refrigerator4.gif' />");
+                           document.write("<div class='CalcTitle'><h2>Appliances</h2></div>");
+                           var appliances = new calculator("appliances","Appliance.gif",5);
+                           appliances.addItem(new calcItem("Air Conditioner",20,0,2,0,0));
+                           // appliances.addItem(new calcItem("Dish Washer",20,0,2,0,0));
+                           appliances.addItem(new calcItem("Clothes Dryer",20,0,1,0,0));
+                           appliances.addItem(new calcItem("Freezer",45,0,3,0,0));
+                           appliances.addItem(new calcItem("Kitchen Appliance",1,0,0,0,0));
+                           appliances.addItem(new calcItem("Microwave",5,0,0,0,0));
+                           appliances.addItem(new calcItem("Refrigerator Large",45,0,2,0,0));
+                           appliances.addItem(new calcItem("Refrigerator Standard",35,0,2,0,0));
+                           appliances.addItem(new calcItem("Stove",20,0,2,0,0));
+                           appliances.addItem(new calcItem("TV Bigscreen",55,0,3,0,0));
+                           appliances.addItem(new calcItem("TV Console",15,0,1,0,0));
+                           appliances.addItem(new calcItem("TV Mid-size",15,0,2,0,0));
+                           appliances.addItem(new calcItem("TV Portable",5,0,0,0,0));
+                           appliances.addItem(new calcItem("Vacuum Cleaner",5,0,0,0,0));
+                           appliances.addItem(new calcItem("Clothes Washer",20,0,2,0,0));
+                           appliances.addItem(new calcItem("Weight Bench",20,0,0,0,4));
+                           appliances.printTable();
+                           // MISCELLANEOUS
+                           //document.write("<img style='margin-left:0px; margin-right:5px;' hspace='5px' vspace='5px' align='left' width='60px' height='103px' border='0' alt='Man with Picture' src='images/Art2.gif' />");
+                           document.write("<div class='CalcTitle'><h2>Miscellaneous</h2></div>");
+                           var misc = new calculator("misc","Other.gif",5);
+                           misc.addItem(new calcItem("Baby Carriage",4,0,1,0,0));
+                           misc.addItem(new calcItem("Bar-B-Que Grill",15,0,2,0,10));
+                           misc.addItem(new calcItem("Bicycle",5,0,1,0,0));
+                           misc.addItem(new calcItem("Cedar Chest",15,0,1,0,0));
+                           misc.addItem(new calcItem("Computer & Acc",15,0,1,0,0));
+                           misc.addItem(new calcItem("Drum Set",30,0,3,0,2));
+                           misc.addItem(new calcItem("Guitar",2,0,1,0,0));
+                           misc.addItem(new calcItem("Guitar Amp",6,0,1,0,0));
+                           misc.addItem(new calcItem("Piano Baby Grand",75,0,5,1,0));
+                           misc.addItem(new calcItem("Piano Upright",60,0,5,1,0));
+                           misc.addItem(new calcItem("Sax / Trombone",5,0,1,0,0));
+                           misc.addItem(new calcItem("Filing Cabinet 2 Dwr",6,0,1,0,0));
+                           misc.addItem(new calcItem("Filing Cabinet 4 Dwr",12,0,1,0,0));
+                           misc.addItem(new calcItem("Rug Small",3,0,1,0,0));
+                           misc.addItem(new calcItem("Rug Large",15,0,5,0,0));
+                           misc.addItem(new calcItem("Pic Frame / Mirror",2,0,1,0,0));
+                           misc.addItem(new calcItem("Stereo Component",7,0,1,0,0));
+                           misc.addItem(new calcItem("Stereo Console",15,0,3,0,0));
+                           misc.addItem(new calcItem("Kayak",60,0,10,1,5));
+                           misc.addItem(new calcItem("Lawnmower",7.5,0,1,0,0));
+                           misc.addItem(new calcItem("Motorcycle",100,0,10,1,30));
+                           misc.addItem(new calcItem("Sewing Machine",10,0,1,0,0));
+                           misc.addItem(new calcItem("Shovel/Rake/Etc",1.5,0,0,0,0));
+                           misc.addItem(new calcItem("Suitcase",5,0,1,0,0));
+                           misc.addItem(new calcItem("Tires - Car",5,0,0,0,0));
+                           misc.addItem(new calcItem("Tires - Pickup",9,0,0,0,0));
+                           misc.addItem(new calcItem("Tool Box",2,0,1,0,0));
+                           misc.addItem(new calcItem("Tool Chest",10,0,5,0,0));
+                           misc.addItem(new calcItem("Trunk",5,0,2,0,0));
+                           misc.addItem(new calcItem("Gold/Ski Equip",3,0,.5,0,0));
+                           misc.printTable();
+                           // BOXES
+                           //document.write("<img style='margin-left:0px; margin-right:5px;' hspace='5px' vspace='5px' align='left' width='60px' height='100px' border='0' alt='Packages on Dolly' src='images/PackagesOnDolly.gif' />");
+                           document.write("<div class='CalcTitle'><h2>Boxes</h2></div>");
+                           var boxes = new calculator("boxes","Box.gif",5);
+                           boxes.addItem(new calcItem("Wardrobe",12,0,1,0,0));
+                           // boxes.addItem(new calcItem("File",2.5,0,1,0,0));
+                           boxes.addItem(new calcItem("Large",4.5,0,1,0,0));
+                           boxes.addItem(new calcItem("Medium",3,0,1,0,0));
+                           boxes.addItem(new calcItem("Small/Book/Apple",1.5,0,1,0,0));
+                           boxes.addItem(new calcItem("Extra Large",6,0,1,0,0));
+                           boxes.printTable();
+                           document.write("<div class='CalcTitle' style='margin-top:25px;'><h2>Calculate Your Unit Size</h2></div>");
+                           document.write('<center><table width="92%" cellpadding="5"><tr><td colspan="3" style="text-align:justify;"><span class="bodytext">To add additional space for items not listed above, figure the total <b>cubic</b> space (length x height x width), in feet, needed for each individual item, and total the cubic footage. ');
+                           document.write('Alternately, you can place all the items in one area and measure the space the group needs. Be sure to add extra space for non-stackable items.<br />');
+                           document.write('Once you have your total amount of extra space figured, enter the amount here: <input type="text" tabIndex="'+(tabIndex++)+'" name="xtra" size="6" onblur="calcTotal()" /><br /><b>Select "Calculate" to receive a unit size estimate</b></span><div id="UnitEstimate"></td></tr>');
+                           document.write('<tr><td><table width="100%"><tr><td align="center"><input type="button" tabIndex="'+(tabIndex++)+'" value="Calculate" onClick="showItem(\'UnitEstimate\')" /></td>');
+                           document.write('<td align="center"><input type="text" tabIndex="'+(tabIndex++)+'" name="total" readonly="readonly" size="6" /><br /><span class="bodytext" style="font-size:10px;">Total Cubic Feet</span></td>');
+                           document.write('<td align="left"><input type="submit" onClick="sendmail(); return true;" tabIndex="'+(tabIndex++)+'" value="Send E-mail" /><input type="hidden" name="usrList" value="usrlist" /><input type="hidden" name="unitSize" value="unitSize" /></td>');
+                           document.write('<td align="left"><input type="reset" tabIndex="'+(tabIndex++)+'" value="Clear Form" /></td></tr></table></td></tr></table>');
+                           // Note: create another "Pack Tightly" button, and simply subtrace the total padding.
+                        </script>
+                     </form>
+   <!-- ****************************************************************************************** -->
+   <!--  END FORM                                                                                  -->
+   <!-- ****************************************************************************************** -->
+                  </td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+   </table>
+</div>
+</body>
+</div>
+   <div class="verticalspacer"></div>
+  </div>
+  <!--[if lt IE 9]>
+  <div class="preload_images">
+   <img class="preload" src="images/u1368-a-grad.png" alt=""/>
+  </div>
+  <![endif]-->
+  <!-- JS includes -->
+  <script type="text/javascript">
+   if (document.location.protocol != 'https:') document.write('\x3Cscript src="http://musecdn2.businesscatalyst.com/scripts/4.0/jquery-1.8.3.min.js" type="text/javascript">\x3C/script>');
+</script>
+  <script type="text/javascript">
+   window.jQuery || document.write('\x3Cscript src="scripts/jquery-1.8.3.min.js" type="text/javascript">\x3C/script>');
+</script>
+  <script src="scripts/museutils.js?4259329708" type="text/javascript"></script>
+  <script src="scripts/jquery.musemenu.js?440295907" type="text/javascript"></script>
+  <script src="scripts/jquery.watch.js?4125239756" type="text/javascript"></script>
+  <!-- Other scripts -->
+  <script type="text/javascript">
+   $(document).ready(function() { try {
+(function(){var a={},b=function(a){if(a.match(/^rgb/))return a=a.replace(/\s+/g,"").match(/([\d\,]+)/gi)[0].split(","),(parseInt(a[0])<<16)+(parseInt(a[1])<<8)+parseInt(a[2]);if(a.match(/^\#/))return parseInt(a.substr(1),16);return 0};(function(){$('link[type="text/css"]').each(function(){var b=($(this).attr("href")||"").match(/\/?css\/([\w\-]+\.css)\?(\d+)/);b&&b[1]&&b[2]&&(a[b[1]]=b[2])})})();(function(){$("body").append('<div class="version" style="display:none; width:1px; height:1px;"></div>');
+for(var c=$(".version"),d=0;d<Muse.assets.required.length;){var f=Muse.assets.required[d],g=f.match(/([\w\-\.]+)\.(\w+)$/),k=g&&g[1]?g[1]:null,g=g&&g[2]?g[2]:null;switch(g.toLowerCase()){case "css":k=k.replace(/\W/gi,"_").replace(/^([^a-z])/gi,"_$1");c.addClass(k);var g=b(c.css("color")),h=b(c.css("background-color"));g!=0||h!=0?(Muse.assets.required.splice(d,1),(g!=a[f]>>>24||h!=(a[f]&16777215))&&Muse.assets.outOfDate.push(f)):d++;c.removeClass(k);break;case "js":k.match(/^jquery-[\d\.]+/gi)&&typeof $!=
+"undefined"?Muse.assets.required.splice(d,1):d++;break;default:throw Error("Unsupported file type: "+g);}}c.remove();(Muse.assets.outOfDate.length||Muse.assets.required.length)&&alert("Some files on the server may be missing or incorrect. Clear browser cache and try again. If the problem persists please contact website author.")})()})();/* body */
+Muse.Utils.transformMarkupToFixBrowserProblemsPreInit();/* body */
+Muse.Utils.prepHyperlinks(false);/* body */
+Muse.Utils.initWidget('.MenuBar', function(elem) { return $(elem).museMenu(); });/* unifiedNavBar */
+Muse.Utils.fullPage('#page');/* 100% height page */
+Muse.Utils.showWidgetsWhenReady();/* body */
+Muse.Utils.transformMarkupToFixBrowserProblems();/* body */
+} catch(e) { if (e && 'function' == typeof e.notify) e.notify(); else Muse.Assert.fail('Error calling selector function:' + e); }});
+</script>
+   </body>
+</html>
