@@ -1,0 +1,88 @@
+/* SPACE CALCULATOR */
+/* ------------------------- */
+
+#calculate {
+	width:100%;
+	padding:20px 0;
+	float:left;
+}
+
+#calculate h1,
+#calculate h2,
+#calculate h3,
+#calculate h4 {
+	width:560px;
+}
+
+#calculate h3 {
+	clear:left;
+	font-size:12px;
+	margin:3px 0 9px 0;
+	border-bottom:1px solid #4f4f4f;
+}
+
+#calculate dl {
+	float:left;
+	width:600px;
+	margin-bottom:8px;
+}
+
+#calculate dt {
+	float:left;
+	width:140px;
+	height:22px;
+	line-height:22px;
+	padding:0;
+	margin: 0;
+	padding-left: 15px;
+	padding-bottom: 10px;
+}
+#calculate dd {
+	float:left;
+	width:25px;
+	height:22px;
+	padding:0 10px 0 0;
+}
+#calculate dd input {
+	width:20px;
+}
+
+#calculate input#clear {
+	clear:left;
+	float:left;
+	width:100px;
+}
+#calculate input#submit {
+	float:left;
+	margin-left:45px;
+	width:100px;
+}
+#calculate input#label {
+	width:16em;
+	display:block;
+	clear:left;
+	float:left;
+	margin-top:10px;
+	padding:2px;
+	font-weight:bold;
+	border:0;
+	background:transparent;
+}
+#calculate input#total {
+	display:block;
+	float:left;
+	padding:2px;
+	font-weight:bold;
+	margin-top:10px;
+	color:#600;
+	border:0;
+	background:transparent;
+}
+
+#calculate h2 {
+	clear:both;
+	padding:10px 0;
+}
+#calculate h2.total {
+	font-size:18px;
+}
